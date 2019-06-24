@@ -6,13 +6,11 @@
 /*   By: jhansen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 11:28:55 by jhansen           #+#    #+#             */
-/*   Updated: 2019/06/24 14:49:00 by jhansen          ###   ########.fr       */
+/*   Updated: 2019/06/24 15:22:52 by jhansen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 
 t_list	*ft_file(int fd, t_list **file)
 {
@@ -78,43 +76,4 @@ int		get_next_line(const int fd, char **line)
 	else
 		ft_strclr(current->content);
 	return (1);
-}
-
-int		main(int argc, char **argv)
-{
-    int		fd;
-    char	**line;
-    int		gnlret;
-    int		linecount;
-
-	linecount = 0;
-	gnlret = 1;
-	if (argc != 2)
-	{
-		printf("%s\n", "Input a file name please\n");
-		return (0);
-	}
-	else
-	{
-		fd = open(argv[1], O_RDONLY);
-		if (fd < 0)
-		{
-			printf("Could not find file: %s\n", argv[1]);
-			return (0);
-		}
-		printf("Argc: %d\n", argc);
-		printf("File to open: %s\n", argv[1]);
-		line = ft_memalloc(sizeof(char **));
-		printf("BUFF_SIZE: %d\n\n", BUFF_SIZE);
-		while ((gnlret = get_next_line(fd, line)) > 0)
-		{
-			printf("%s", *line);
-			printf("%d\n", gnlret);
-			linecount++;
-		}
-		printf("\nLine count: %d\n", linecount);
-		printf("Finished\n\n");
-		close(fd);
-	}
-	return (0);
 }

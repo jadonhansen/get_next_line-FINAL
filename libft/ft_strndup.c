@@ -6,7 +6,7 @@
 /*   By: jhansen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 15:34:22 by jhansen           #+#    #+#             */
-/*   Updated: 2019/06/24 14:32:27 by jhansen          ###   ########.fr       */
+/*   Updated: 2019/06/24 15:24:12 by jhansen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strndup(const char *s, size_t n)
 
 	i = 0;
 	if (!(str = ft_strnew(n)))
-		return(NULL);
+		return (NULL);
 	while (i < n)
 	{
 		str[i] = s[i];
