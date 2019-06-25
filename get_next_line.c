@@ -6,7 +6,7 @@
 /*   By: jhansen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 11:28:55 by jhansen           #+#    #+#             */
-/*   Updated: 2019/06/25 13:25:20 by jhansen          ###   ########.fr       */
+/*   Updated: 2019/06/25 15:08:57 by jhansen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_list	*ft_file(int fd, t_list **file)
 	return (temp);
 }
 
-int		ft_line(char *content, char **line)
+int		ft_generate_line(char *content, char **line)
 {
 	int		i;
 	char	*temp;
@@ -44,6 +44,25 @@ int		ft_line(char *content, char **line)
 	return (i);
 }
 
+int		ft_reading(int fd, char **content)
+{
+	char	buffer[BUFF_SIZE + 1];
+	char	*temp;
+	int		ret;
+
+	while ((ret = read(fd, buffer, BUFF_SIZE)) > 0)
+	{
+		buffer[ret] = '\0';
+		temp = *content;
+		if (!(*content = ft_strjoin(*content, buffer)))
+			return (-1);
+		free(temp);
+		if (ft_strchr(buffer, '\n'))
+			break ;
+	}
+	return (ret);
+}
+
 int		get_next_line(const int fd, char **line)
 {
 	static t_list	*file;
@@ -52,29 +71,22 @@ int		get_next_line(const int fd, char **line)
 	char			*temp;
 	int				ret;
 
-	if ((fd < 0 || line == NULL || read(fd, NULL, 0) < 0
-			|| (!(current = ft_file(fd, &file)))))
+	if ((fd < 0 || line == NULL || (read(fd, buffer, 0)) < 0
+			|| (!(current = ft_file(fd, &file))) || (BUFF_SIZE <= 0)))
 		return (-1);
-	while ((ret = read(fd, buffer, BUFF_SIZE)) > 0)
-	{
-		buffer[ret] = '\0';
-		temp = current->content;
-		if (!(current->content = ft_strjoin(temp, buffer)))
-			return (-1);
-		free(temp);
-		if (ft_strchr(buffer, '\n'))
-			break ;
-	}
-	ret = ft_line(current->content, line);
 	temp = current->content;
-	if (ret == 0 && temp[0] == '\0')
+	ret = ft_reading(fd, &temp);
+	current->content = temp;
+	if (ret == 0 && *temp == '\0')
 		return (0);
+	ret = ft_generate_line(current->content, line);
+	temp = current->content;
 	if (temp[ret] != '\0')
 	{
 		current->content = ft_strdup(temp + ret + 1);
 		free(temp);
 	}
 	else
-		ft_strclr(current->content);
+		ft_strclr(temp);
 	return (1);
 }
