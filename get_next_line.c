@@ -6,7 +6,7 @@
 /*   By: jhansen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 11:28:55 by jhansen           #+#    #+#             */
-/*   Updated: 2019/06/24 17:02:00 by jhansen          ###   ########.fr       */
+/*   Updated: 2019/06/25 13:25:20 by jhansen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int		ft_line(char *content, char **line)
 		i++;
 	if (!(*line = ft_strndup(content, i)))
 		return (0);
-	free(temp);
 	return (i);
 }
 
@@ -54,13 +53,14 @@ int		get_next_line(const int fd, char **line)
 	int				ret;
 
 	if ((fd < 0 || line == NULL || read(fd, NULL, 0) < 0
-			|| !(current = ft_file(fd, &file))))
+			|| (!(current = ft_file(fd, &file)))))
 		return (-1);
-	while ((ret = read(fd, buffer, BUFF_SIZE)))
+	while ((ret = read(fd, buffer, BUFF_SIZE)) > 0)
 	{
 		buffer[ret] = '\0';
 		temp = current->content;
-		current->content = ft_strjoin(temp, buffer);
+		if (!(current->content = ft_strjoin(temp, buffer)))
+			return (-1);
 		free(temp);
 		if (ft_strchr(buffer, '\n'))
 			break ;
