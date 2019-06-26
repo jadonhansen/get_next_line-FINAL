@@ -6,7 +6,7 @@
 /*   By: jhansen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 11:28:55 by jhansen           #+#    #+#             */
-/*   Updated: 2019/06/25 15:08:57 by jhansen          ###   ########.fr       */
+/*   Updated: 2019/06/26 10:40:08 by jhansen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		ft_generate_line(char *content, char **line)
 	return (i);
 }
 
-int		ft_reading(int fd, char **content)
+int		ft_reading(const int fd, char **content)
 {
 	char	buffer[BUFF_SIZE + 1];
 	char	*temp;
@@ -83,7 +83,7 @@ int		get_next_line(const int fd, char **line)
 	temp = current->content;
 	if (temp[ret] != '\0')
 	{
-		current->content = ft_strdup(temp + ret + 1);
+		current->content = ft_strdup(current->content + ret + 1);
 		free(temp);
 	}
 	else
