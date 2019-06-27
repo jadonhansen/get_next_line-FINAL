@@ -6,11 +6,12 @@
 /*   By: jhansen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 11:28:55 by jhansen           #+#    #+#             */
-/*   Updated: 2019/06/26 10:40:08 by jhansen          ###   ########.fr       */
+/*   Updated: 2019/06/27 13:15:20 by jhansen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "libft/libft.h"
 
 t_list	*ft_file(int fd, t_list **file)
 {
@@ -71,8 +72,8 @@ int		get_next_line(const int fd, char **line)
 	char			*temp;
 	int				ret;
 
-	if ((fd < 0 || line == NULL || (read(fd, buffer, 0)) < 0
-			|| (!(current = ft_file(fd, &file))) || (BUFF_SIZE <= 0)))
+	if ((fd < 0 || !(line) || (read(fd, buffer, 0)) < 0
+		|| (!(current = ft_file(fd, &file))) || (BUFF_SIZE <= 0)))
 		return (-1);
 	temp = current->content;
 	ret = ft_reading(fd, &temp);
