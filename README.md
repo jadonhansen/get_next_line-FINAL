@@ -2,11 +2,12 @@
 
 WeThinkCode 42 project - Semester 1
 
-Grade achieved: 125/125
+#### Grade achieved: 125/125
 
-DESCRIPTION: A function built to obtain input from the terminal via typing or using a files contents.
+#### DESCRIPTION: 
+A function built to obtain input from the terminal via typing or using a files contents.
 
-Main Concepts Learnt:
+#### Main Concepts Learnt:
 1 - File Descriptors
 2 - Static Variables
 3 - Buff Sizes
